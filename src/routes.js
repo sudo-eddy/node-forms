@@ -1,6 +1,8 @@
 
 const express = require('express')
 const router = express.Router()
+const { check, validationResult } = require('express-validator/check')
+const { matchedData } = require('express-validator/filter')
 
 //Get main page
 router.get('/', (req, res) => {
@@ -15,18 +17,26 @@ router.get('/contact', (req, res) => {
   })
 })
 
-router.post('/contact', (req, res) => {
+//Validate and sanitize message and email
+router.post('/contact', [
+  check('message')
+    .isLength({ min: 1 })
+    .withMessage('Message is required')
+    .trim(),
+  check('email')
+    isEmail()
+    withMessage('That email doesn\`t look right')
+    .trim()
+    normalizeEmail()
+], (req, res) => {
+  const errors = validationResult(req)
   res.render('contact', {
-    data: req.body, // { message, email }
-    errors: {
-      message: {
-        msg: 'A message is required'
-      },
-      email: {
-        msg: 'That email doesn\'t look right'
-      }
-    }
+    data: req.body,
+    errors: errors.mapped()
   })
+
+  const data = matchedData(req)
+  console.log('Sanitized:', data)
 })
 
 module.exports = router
