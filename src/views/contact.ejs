@@ -16,9 +16,8 @@
   <%#return invalid if errors,message is true%>
     <div class="form-field <%= errors.message ? 'form-field-invalid' : ''%>">
         <label for="message">Message</label>
-        <textarea class="input" id="message" rows="4" autofocus>
-        <%= data.message %>
-        </textarea>
+        <textarea class="input" id="message" name="message" rows="4" autofocus>
+        <%= data.message %></textarea>
         <% if (errors.message) { %>
           <div class="error"><%= errors.message.msg %></div>
         <% } %>
