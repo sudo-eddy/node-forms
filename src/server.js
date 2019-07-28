@@ -23,7 +23,7 @@ const middlewares = [
   express.static(path.join(__dirname, 'public')),
   bodyParser.urlencoded({ extended: true }),
   validator(),
-  cookieParser(),
+  cookieParser(), 
   session({
     secret: 'super-secret-key',
     key: 'super-secret-cookie',
