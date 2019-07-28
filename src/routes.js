@@ -20,23 +20,28 @@ router.get('/contact', (req, res) => {
 //Validate and sanitize message and email
 router.post('/contact', [
   check('message')
-    .isLength({ min: 1 })
+    .isLength({ min: 5 })
     .withMessage('Message is required')
     .trim(),
   check('email')
-    isEmail()
-    withMessage('That email doesn\`t look right')
+    .isEmail()
+    .withMessage('That email doesn\`t look right')
     .trim()
-    normalizeEmail()
+    .normalizeEmail()
 ], (req, res) => {
   const errors = validationResult(req)
-  res.render('contact', {
-    data: req.body,
-    errors: errors.mapped()
-  })
-
+  if (!errors.isEmpty()) {
+    return res.render('contact', {
+      data: req.body,
+      errors: errors.mapped()
+    })
+  } 
   const data = matchedData(req)
   console.log('Sanitized:', data)
+  //homework: send sanitized data in email or persist in a db
+
+  req.flash('success', 'Thanks for the message! I\'ll be in touch :)')
+  res.redirect('/')
 })
 
 module.exports = router
