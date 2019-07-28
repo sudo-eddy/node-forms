@@ -12,8 +12,10 @@
   <% } %>
 </div>
 
-<form method="post" action="/contact" novalidate>
+<form method="post" action="/contact?_csrf=<%= csrfToken %>" novalidate enctype="multipart/form-data">
   <%#return invalid if errors,message is true%>
+  <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+  <%#message%>
     <div class="form-field <%= errors.message ? 'form-field-invalid' : ''%>">
         <label for="message">Message</label>
         <textarea class="input" id="message" name="message" rows="4" autofocus>
@@ -22,6 +24,7 @@
           <div class="error"><%= errors.message.msg %></div>
         <% } %>
     </div>
+    <%#email%>
     <div class="form-field <%= errors.email ? 'form-field-invalid' : '' %>">
         <label for="email">Email</label>
         <input class="input" id="email" name="email" value="<%= data.email%>" />
@@ -29,6 +32,12 @@
           <div class="error"><%= errors.email.msg %></div>
           <% } %>
     </div>
+    <%#file upload%>
+    <div class="form-field">
+      <label for="photo">Photo</label>
+      <input class="input" id="photo" name="photo" type="file" />
+    </div>
+    <%#submit%>
     <div class="form-actions">
         <button class="btn" type="submit">Send</button>
     </div>

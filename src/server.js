@@ -1,6 +1,8 @@
 
 const path = require('path')
 const express = require('express')
+const helmet = require('helmet')
+const csrf = require('csurf')
 const layout = require('express-layout')
 const bodyParser = require('body-parser')
 const validator = require('express-validator')
@@ -16,11 +18,12 @@ app.set('view engine', 'ejs')
 
 //Set up middlewares
 const middlewares = [
+  helmet(),
   layout(),
   express.static(path.join(__dirname, 'public')),
   bodyParser.urlencoded({ extended: true }),
   validator(),
-  cookieParser(),
+  cookieParser(), 
   session({
     secret: 'super-secret-key',
     key: 'super-secret-cookie',
@@ -28,7 +31,8 @@ const middlewares = [
     saveUninitialized: false,
     cookie: { maxAge: 60000 }
   }),
-  flash()
+  flash(),
+  csrf({ cookie: true })
 ]
 
 app.use(middlewares)

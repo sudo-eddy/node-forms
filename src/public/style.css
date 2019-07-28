@@ -93,6 +93,17 @@ label {
 .btn:active {
   transform: translateY(1px);
 }
+.welcome {
+  justify-content:flex-start;
+  width: 500px;
+  height: 100px;
+  background: #c8dad3;
+  border-radius: 10px;
+  font: inherit;
+  font-size: 12px;
+  cursor: pointer;
+  text-shadow: 0 1px 0 rgba(0,0,0,.3), 0 1px 1px rgba(0,0,0,.2);
+}
 .flash {
   padding: 15px 20px;
   border: 1px solid;
